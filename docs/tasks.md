@@ -35,10 +35,10 @@
 
 ## 未驗證／限制
 
-- 只在 Chromium 驗證；未測 Firefox、Safari（含 Safari 私密瀏覽的 IndexedDB 行為）。
+- 使用者只在瀏覽器使用本網站；以 Chromium 驗證。未測 Firefox、Safari（含 Safari 私密瀏覽的 IndexedDB 行為）。
 - 未在實體手機／平板裝置測試，只用 viewport 模擬。
 - 未用螢幕閱讀器實測；只驗證 label、鍵盤 Tab、可見 focus、Esc 關閉對話框。
-- 產生的 `.claude/skills`、`.agents/skills` 入口未在實際 Claude Code／Codex 中驗證會被載入。
+- 產生的 `.claude/skills`、`.agents/skills` 入口未在實際 Claude Code／Codex 中驗證會被載入（屬下載後在外部工具的行為，不在本網站的瀏覽器測試範圍）。
 - Codex skills 位置只透過官方頁搜尋摘錄確認（該網域被此環境 proxy 封鎖）。
 - 同一專案在多個分頁同時編輯：最後寫入為準，未做衝突提示。
 

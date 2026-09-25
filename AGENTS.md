@@ -24,3 +24,10 @@ npm run e2e   # Playwright，自動 build + preview（port 4173）
 - 模板內容變更需遞增 `TEMPLATE_VERSION`；資料格式變更需遞增 `SCHEMA_VERSION` 並提供遷移。
 - 不新增對外連線、分析追蹤或模型 API。
 - 完成工作後更新 `docs/tasks.md` 與 `docs/handoff.md`。
+
+## 完成後回報（使用者要求）
+
+- 使用者只在瀏覽器中使用本網站：驗證以瀏覽器為準（Playwright Chromium E2E + 實際操作）。
+- 每次完成工作，回覆中簡短列出：
+  1. 如何在瀏覽器測試：`npm run dev` 後開 http://localhost:5173 的具體操作步驟。
+  2. 本次修改或新增的檔案路徑。
