@@ -46,4 +46,17 @@ describe('規則檢查', () => {
     expect(r.openQuestions.map((i) => i.code)).toEqual(expect.arrayContaining(['open:tech-stack', 'open:tech-deployment']));
     expect(r.isDraft).toBe(true);
   });
+
+  it('不安全或格式錯誤的網址列為提醒，並指向對應欄位', () => {
+    const p = filledProject();
+    p.basics.repoUrl = 'javascript:alert(1)';
+    p.tech.references = [
+      { id: 'REF-001', url: 'data:text/html,x', note: '' },
+      { id: 'REF-002', url: 'https://example.com', note: '' },
+    ];
+    const r = runRuleCheck(p);
+    expect(r.issues.find((i) => i.code === 'invalid-url:repo')).toMatchObject({ level: 'notice', fieldId: 'basics-repoUrl' });
+    expect(r.issues.find((i) => i.code === 'invalid-url:REF-001')).toMatchObject({ level: 'notice', fieldId: 'ref-REF-001-url' });
+    expect(r.issues.some((i) => i.code === 'invalid-url:REF-002')).toBe(false);
+  });
 });

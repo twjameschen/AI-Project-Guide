@@ -1,4 +1,5 @@
 import { answerStatus, hasText, isFilled } from './answers';
+import { isSafeHttpUrl } from './links';
 import type { Answer, Project } from './model';
 import { STEP_INDEX, type WizardStepKey } from './steps';
 
@@ -154,6 +155,14 @@ export function runRuleCheck(p: Project): RuleCheckResult {
   }
   if (p.testing.usesLLM && !hasText(p.testing.llmQuality)) {
     add({ code: 'llm-quality-missing', level: 'notice', title: '產品會使用 LLM，但尚未說明品質評估方式', detail: '例如：用哪些範例輸入檢查回答、什麼樣的回答算不合格。', step: 'acceptance', fieldId: 'testing-llmQuality' });
+  }
+  if (hasText(p.basics.repoUrl) && !isSafeHttpUrl(p.basics.repoUrl)) {
+    add({ code: 'invalid-url:repo', level: 'notice', title: 'Repo 網址格式不正確', detail: '只接受 http:// 或 https:// 網址；匯出文件不會把它變成連結。', step: 'basics', fieldId: 'basics-repoUrl' });
+  }
+  for (const r of p.tech.references) {
+    if (hasText(r.url) && !isSafeHttpUrl(r.url)) {
+      add({ code: `invalid-url:${r.id}`, level: 'notice', title: `參考連結 ${r.id} 格式不正確`, detail: '只接受 http:// 或 https:// 網址；匯出文件不會把它變成連結。', step: 'tech', fieldId: `ref-${r.id}-url` });
+    }
   }
   if (p.aiWork.preferredTool === '') {
     add({ code: 'tool-missing', level: 'notice', title: '尚未選擇偏好的開發工具', detail: '選擇後，Prompt 會預設使用對應工具的入口文件。', step: 'ai', fieldId: 'ai-preferredTool' });

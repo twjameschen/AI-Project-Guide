@@ -31,11 +31,16 @@ export function App() {
           return;
         }
         // 第一次使用時加入示範專案；使用者移除後不再自動加入。
-        const inited = await repo.getMeta<boolean>(DEMO_META_KEY);
-        if (!inited) {
-          const demo = buildDemo(nowIso());
-          await repo.addDemo(demo.project, demo.briefs);
-          await repo.setMeta(DEMO_META_KEY, true);
+        // 示範資料不是必要功能：寫入失敗（例如空間不足）不阻擋啟動，之後可在「資料與備份」重新加入。
+        try {
+          const inited = await repo.getMeta<boolean>(DEMO_META_KEY);
+          if (!inited) {
+            const demo = buildDemo(nowIso());
+            await repo.addDemo(demo.project, demo.briefs);
+            await repo.setMeta(DEMO_META_KEY, true);
+          }
+        } catch (e) {
+          console.warn('示範專案未加入：', e);
         }
         if (alive) setBoot({ status: 'ready', repo });
       } catch (e) {

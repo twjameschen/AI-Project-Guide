@@ -148,9 +148,12 @@ function ProjectSummary({ p }: { p: Project }) {
       <dl className="kv">
         <dt>簡介</dt>
         <dd>{p.basics.summary || <span className="muted">未填寫</span>}</dd>
+        <dt>新舊專案</dt>
+        <dd>{p.basics.kind === 'existing' ? '既有專案' : p.basics.kind === 'new' ? '全新專案' : <span className="muted">未選擇</span>}</dd>
         <dt>類型</dt>
         <dd>
-          {p.basics.kind === 'existing' ? '既有專案' : p.basics.kind === 'new' ? '全新專案' : '未選擇'}・{PRODUCT_TYPE_LABEL[p.basics.productType]}
+          {p.basics.productType ? PRODUCT_TYPE_LABEL[p.basics.productType] : <span className="muted">未選擇</span>}
+          {p.basics.productType === 'other' && p.basics.productTypeOther.trim() ? `：${p.basics.productTypeOther}` : ''}
         </dd>
         <dt>要解決的問題</dt>
         <dd>

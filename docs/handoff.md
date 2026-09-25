@@ -4,9 +4,9 @@
 
 ## 目前狀態
 
-v0.1.0 功能完整可本機執行（`npm install && npm run dev`）。規格要求的主要畫面、文件生成、Skills、Prompt、brief、備份還原皆已實作，並通過 typecheck、lint、51 項單元測試、build、15 項 E2E（詳見 docs/tasks.md）。
+v0.1.0 功能完整可本機執行（`npm install && npm run dev`）。規格要求的主要畫面、文件生成、Skills、Prompt、brief、備份還原皆已實作，並通過 typecheck、lint、52 項單元測試、build、16 項 E2E，以及一輪探索測試（詳見 docs/tasks.md）。
 
-尚未發布、未建立遠端 repo。
+尚未發布網站。程式碼已推送到 `claude/hopeful-davinci-kduymf` 分支（未開 PR）。
 
 ## 程式結構
 

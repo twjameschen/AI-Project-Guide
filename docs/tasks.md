@@ -18,11 +18,20 @@
 | --- | --- |
 | `npm run typecheck` | passed |
 | `npm run lint` | passed |
-| `npm test` | passed：8 檔 51 項 |
+| `npm test` | passed：8 檔 52 項 |
 | `npm run build` | passed（chunk > 500 kB 警告，見 decisions D-009） |
-| `npm run e2e` | passed：15 項 |
+| `npm run e2e` | passed：16 項 |
 | `npm audit` | 0 vulnerabilities |
 | 手動截圖檢查 1366×900、390×844（總覽、精靈、摘要、文件、Prompt、執行紀錄、資料、說明） | 無水平溢位、無 console 錯誤 |
+| 探索測試腳本（精靈 8 步全操作、排序／刪除 ID 不重用、7 種 Prompt × 2 工具、brief 增刪與接手切換、封存篩選、備份取代、示範專案移除與重新加入、404） | 全部通過；首輪 3 項失敗經確認為腳本斷言錯誤，修正後通過 |
+| 系統 `unzip -t` 與 Python `zipfile` 讀取匯出 ZIP | 無錯誤，21 個檔案 |
+
+## 測試中發現並修正的問題（2026-09-25）
+
+- 啟動時加入示範專案若寫入失敗，不再阻擋整個 App（E2E：示範專案寫入失敗時不阻擋啟動）。
+- 規則檢查新增提醒：Repo 網址或參考連結不是 http(s)（單元測試）。
+- 摘要頁分開顯示「新舊專案」與「類型」，並帶出「其他」類型說明。
+- 匯入檔案選擇後清空 input，可重選同一檔案（E2E 7 發現）。
 
 ## 未驗證／限制
 

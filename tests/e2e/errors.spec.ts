@@ -40,3 +40,15 @@ test('IndexedDB 不可用時顯示說明，不假裝可以保存', async ({ page
   await expect(page.getByRole('alert')).toContainText('無法使用 IndexedDB');
   await expect(page.getByTestId('new-project')).toHaveCount(0);
 });
+
+test('示範專案寫入失敗時不阻擋啟動', async ({ page }) => {
+  await page.addInitScript(() => {
+    IDBObjectStore.prototype.add = function () {
+      throw new DOMException('quota', 'QuotaExceededError');
+    };
+  });
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: '專案總覽' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '還沒有專案' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '無法使用瀏覽器儲存空間' })).toHaveCount(0);
+});
